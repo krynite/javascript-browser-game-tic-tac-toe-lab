@@ -8,7 +8,12 @@
 
 
 /*------------------------ Cached Element References ------------------------*/
+const squareEls = document.querySelectorAll('.sqr')
+const messageEl = document.querySelector('#message')
+console.log(`Message sqr${squareEls}`)
+console.log(`Message class${messageEl}`)
 
+const resetBtnEl = document.querySelector('#reset')
 
 
 /*-------------------------------- Functions --------------------------------*/
@@ -16,6 +21,7 @@
 
 
 /*----------------------------- Event Listeners -----------------------------*/
+resetBtnEl.addEventListener('click', init)
 
 
 
@@ -23,7 +29,7 @@ let board;
 let turn;   
 let winner;
 let tie; 
-let winningCombos = [
+const winningCombos = [
     [0,1,2],
     [0,4,8],
     [0,3,6],
@@ -35,17 +41,15 @@ let winningCombos = [
 ]
 
 
-const squareEls = document.querySelectorAll('.sqr')
-const messageEl = document.querySelector('#message')
-
-console.log(`Message sqr${squareEls}`)
-console.log(`Message class${messageEl}`)
 
 
 
 
 
-const init = () => {
+
+
+
+function init() {
     // console.log(`Initialize Func init: `)
     board = ['','','','','','','','',''];
     turn = 'X';       
@@ -85,20 +89,6 @@ squareEls.forEach(button =>{
     button.addEventListener('click', handleClick)
 });
 
-function handleClick(event){
-    console.dir(`Testing handleClick Func: ${event}`)
-    console.log(event)
-    console.log(event.target.id)
-    let squareIndex = Number(event.target.id)
-    console.log(`Thhis is squareIndex Num: ${squareIndex}`)
-    console.log(`Typeof ${typeof squareIndex}`)
-    // console.log(`Testing handleClick Func: ${squareIndex}`)
-    // const squareIndex = event.target.id.value
-    // console.log(squareIndex) 
-    // console.log(`This is squareIndex ${squareIndex}`)
-    placePiece(squareIndex);
-    checkForWinner();
-}
 
 const placePiece = (index) => {
     console.log(`This is placePiece index value: ${index}`)
@@ -110,40 +100,49 @@ const checkForWinner = () => {
     winningCombos.forEach((arrValue) => {
         console.log(`This is checkForWinner() augValue: ${arrValue}`)
         let [a,b,c] = arrValue        
-            console.log(`For "a" value : ${a}`)
-            console.log(`For "b" value : ${b}`)
-            console.log(`For "c" value : ${c}`)
-            if(board[a] ===  board[b] && board[b]=== board[c]) //omitted out && board[c] === board[a] //double check if this makes sense
-                winner = true
+            // console.log(`For "a" value : ${a}`)
+            // console.log(`For "b" value : ${b}`)
+            // console.log(`For "c" value : ${c}`)
+        if(board[a] && board[a] === board[b] && board[a] === board[c]){ //omitted out && board[c] === board[a] //double check if this makes sense
+            winner = true
+            console.log(`Test Winner True`)
+            return;
+        }
                 
     })
 }
 const checkForTie = () => {
     if(winner ===  true) return;
 
-    board.forEach()     //https://tpiros.dev/blog/contains-vs-includes/
+    //https://tpiros.dev/blog/contains-vs-includes/
     if(!board.includes('')) {
         tie = true
+        console.log(`Tie Status: ${tie}`)
+    } else {
+        console.log(`Tie Status: ${tie}`)
     }
+    
 }
 
 const switchPlayerTurn = () => {
+    console.log(`Current Player Turn ${turn}`)
     if(winner === true){
         return;
-    } else {
-        if (turn === 'X') turn = 'O';
-        if (turn === 'O') turn = 'X';
+    } 
+
+    if (turn === 'X') turn = 'O';
+    if (turn === 'O') turn = 'X';
         
-    }
+    
 }
 
 function handleClick(event){
-    console.dir(`Testing handleClick Func: ${event}`)
-    console.log(event)
-    console.log(event.target.id)
+    // console.dir(`Testing handleClick Func: ${event}`)
+    // console.log(event)
+    // console.log(event.target.id)
     let squareIndex = Number(event.target.id)
-    console.log(`Thhis is squareIndex Num: ${squareIndex}`)
-    console.log(`Typeof ${typeof squareIndex}`)
+    // console.log(`Thhis is squareIndex Num: ${squareIndex}`)
+    // console.log(`Typeof ${typeof squareIndex}`)
     // console.log(`Testing handleClick Func: ${squareIndex}`)
     // const squareIndex = event.target.id.value
     // console.log(squareIndex) 
@@ -152,6 +151,7 @@ function handleClick(event){
     checkForWinner();
     checkForTie();
     switchPlayerTurn();
+    render();
 }
 
 
