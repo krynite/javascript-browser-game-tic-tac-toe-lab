@@ -129,9 +129,13 @@ const switchPlayerTurn = () => {
     if(winner === true){
         return;
     } 
-
-    if (turn === 'X') turn = 'O';
-    if (turn === 'O') turn = 'X';
+    console.log(`Player Turn ${turn}`)
+    if (turn === 'X') {
+        turn = 'O'
+        }else {
+            turn = 'X'
+                } ;
+    console.log(`Player Turn ${turn}`)
         
     
 }
